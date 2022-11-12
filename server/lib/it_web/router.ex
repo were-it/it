@@ -1,6 +1,5 @@
 defmodule ItWeb.Router do
   use ItWeb, :router
-  use Pow.Phoenix.Router
 
   pipeline :api do
     plug(:accepts, ["json"])

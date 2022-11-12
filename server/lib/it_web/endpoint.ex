@@ -43,12 +43,13 @@ defmodule ItWeb.Endpoint do
   plug(Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Phoenix.json_library()
+    json_decoder: Jason
   )
 
   plug(Plug.MethodOverride)
   plug(Plug.Head)
   plug(Plug.Session, @session_options)
+  plug(CORSPlug)
   plug(Pow.Plug.Session, otp_app: :it)
   plug(ItWeb.Router)
 end
