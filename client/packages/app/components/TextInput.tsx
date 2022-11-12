@@ -37,7 +37,7 @@ const ControlledInput = (props: TextInputProps) => {
           returnKeyType="done"
           {...inputProps}
         />
-        <View>
+        <View className="h-4">
           {hasError && (<Text className="text-red-600 text-xs px-2">{formState.errors[name].message}</Text>)}
         </View>
       </View>

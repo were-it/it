@@ -37,3 +37,26 @@ export const login = async (data) => {
     return e
   }
 }
+
+export const logout = async () => {
+  try {
+    await AsyncStorage.removeItem('access_token')
+    await AsyncStorage.removeItem('renewal_token')
+  } catch (e) {
+    return e
+  }
+}
+
+export const isSignedIn = (): Promise<Boolean> => {
+  return new Promise((resolve, reject) => {
+    AsyncStorage.getItem('access_token')
+      .then(res => {
+        if (res !== null) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
+      .catch(err => reject(err));
+  });
+}

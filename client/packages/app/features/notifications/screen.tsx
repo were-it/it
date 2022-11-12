@@ -3,7 +3,7 @@ import { View } from 'app/design/view'
 
 export function NotificationsScreen() {
   return (
-    <View className="flex-1 items-center justify-center px-6 py-8 mx-auto w-full">
+    <View className="flex-1 items-center justify-center px-5 py-8 mx-auto w-full">
       <Text>Coming soon.</Text>
     </View>
   )

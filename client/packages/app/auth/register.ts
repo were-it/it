@@ -1,4 +1,4 @@
-import ApiManager from './ApiManager';
+import ApiManager from '../services/ApiManager';
 
 export const register = async ({email, password}) => {
   try {

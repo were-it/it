@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { Button, Image, TouchableOpacity } from 'react-native'
 import { View } from 'app/design/view'
+import { useAuth } from 'app/contexts/AuthContext'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -10,16 +11,20 @@ const Tab = createBottomTabNavigator()
 import { HomeScreen } from '../../features/home/screen'
 import { SplashScreen } from '../../features/splash/screen'
 import { SignUpScreen } from '../../features/sign-up/screen'
+import { LoginScreen } from '../../features/login/screen'
 import { UserDetailScreen } from '../../features/user/detail-screen'
-import { FeedScreen } from '../../features/feed/screen'
-import { HealthScreen } from '../../features/health/screen'
+import { LifeScreen } from '../../features/life/screen'
 import { CalendarScreen } from '../../features/calendar/screen'
-import { MoneyScreen } from '../../features/money/screen'
+import { TasksScreen } from '../../features/tasks/screen'
+import { WealthScreen } from '../../features/wealth/screen'
 import { NotificationsScreen } from '../../features/notifications/screen'
+import { AppsScreen } from '../../features/apps/screen'
 import { LearningScreen } from '../../features/learning/screen'
+import { useContext, useState } from 'react'
 
 const Stack = createNativeStackNavigator<{
   home: undefined
+  login: undefined
   splash: undefined
   'sign-up': undefined
   'user-detail': {
@@ -29,22 +34,24 @@ const Stack = createNativeStackNavigator<{
 
 const ProfileImage = () => {
   return (
-              <TouchableOpacity
-              // onPress={() => navigation.goBack()}
-            >
-              <Image
-                style={{width: 30, height: 30, borderRadius: 15, marginLeft: 16}}
-                accessible
-                accessibilityLabel="text"
-                source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                }}
-              />
-            </TouchableOpacity>
-)
+    <TouchableOpacity
+    // onPress={() => navigation.goBack()}
+    >
+      <Image
+        style={{ width: 30, height: 30, borderRadius: 15, marginLeft: 16 }}
+        accessible
+        accessibilityLabel="text"
+        source={{
+          uri: 'https://reactnative.dev/img/tiny_logo.png',
+        }}
+      />
+    </TouchableOpacity>
+  )
 }
 
 const Home = () => {
+  const {signOut} = useAuth()
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -52,29 +59,45 @@ const Home = () => {
       }}
     >
       <Tab.Screen
-        name="Feed"
-        component={FeedScreen}
+        name="Home"
+        component={HomeScreen}
         options={({ navigation, route }) => ({
           headerLeft: () => {
             return <ProfileImage />
           },
           headerRight: () => {
             return (
-              <View className="flex-row space-x-2 mr-4">
-                <Ionicons name="search-outline" color={'#000000'} backgroundColor="transparent" size={28} />
-                <Ionicons name="chatbubble-outline" color={'#000000'} backgroundColor="transparent" size={28} />
+              <View className="mr-4 flex-row space-x-2">
+                <Ionicons
+                  name="search-outline"
+                  color={'#000000'}
+                  backgroundColor="transparent"
+                  size={28}
+                />
+                <Ionicons
+                  name="chatbubble-outline"
+                  color={'#000000'}
+                  backgroundColor="transparent"
+                  size={28}
+                />
+                <TouchableOpacity onPress={() => signOut()}>
+                  <Ionicons
+                    name="log-out-outline"
+                    color={'#000000'}
+                    backgroundColor="transparent"
+                    size={28}
+                  />
+                </TouchableOpacity>
               </View>
             )
           },
           tabBarIcon: ({ focused, size }) => {
-            let iconName;
+            let iconName
 
-            if (route.name === 'Feed') {
-              iconName = focused
-                ? 'home'
-                : 'home-outline';
+            if (route.name === 'Home') {
+              iconName = focused ? 'home' : 'home-outline'
 
-                return <Ionicons name={iconName} size={size} />;
+              return <Ionicons name={iconName} size={size} />
             }
           },
         })}
@@ -87,54 +110,48 @@ const Home = () => {
             return <ProfileImage />
           },
           tabBarIcon: ({ focused, size }) => {
-            let iconName;
+            let iconName
 
             if (route.name === 'Calendar') {
-              iconName = focused
-                ? 'calendar'
-                : 'calendar-outline';
+              iconName = focused ? 'calendar' : 'calendar-outline'
 
-                return <Ionicons name={iconName} size={size} />;
+              return <Ionicons name={iconName} size={size} />
             }
           },
         })}
       />
       <Tab.Screen
-        name="Money"
-        component={MoneyScreen}
+        name="Tasks"
+        component={TasksScreen}
         options={({ route }) => ({
           headerLeft: () => {
             return <ProfileImage />
           },
           tabBarIcon: ({ focused, size }) => {
-            let iconName;
+            let iconName
 
-            if (route.name === 'Money') {
-              iconName = focused
-                ? 'cash'
-                : 'cash-outline';
+            if (route.name === 'Tasks') {
+              iconName = focused ? 'checkbox' : 'checkbox-outline'
 
-                return <Ionicons name={iconName} size={size} />;
+              return <Ionicons name={iconName} size={size} />
             }
           },
         })}
       />
       <Tab.Screen
-        name="Happiness"
-        component={HealthScreen}
+        name="Life"
+        component={LifeScreen}
         options={({ route }) => ({
           headerLeft: () => {
             return <ProfileImage />
           },
           tabBarIcon: ({ focused, size }) => {
-            let iconName;
+            let iconName
 
-            if (route.name === 'Happiness') {
-              iconName = focused
-                ? 'heart'
-                : 'heart-outline';
+            if (route.name === 'Life') {
+              iconName = focused ? 'happy' : 'happy-outline'
 
-                return <Ionicons name={iconName} size={size} />;
+              return <Ionicons name={iconName} size={size} />
             }
           },
         })}
@@ -147,54 +164,48 @@ const Home = () => {
             return <ProfileImage />
           },
           tabBarIcon: ({ focused, size }) => {
-            let iconName;
+            let iconName
 
             if (route.name === 'Learning') {
-              iconName = focused
-                ? 'book'
-                : 'book-outline';
+              iconName = focused ? 'book' : 'book-outline'
 
-                return <Ionicons name={iconName} size={size} />;
+              return <Ionicons name={iconName} size={size} />
             }
           },
         })}
       />
       <Tab.Screen
-        name="Notifications"
-        component={NotificationsScreen}
+        name="Wealth"
+        component={WealthScreen}
         options={({ route }) => ({
           headerLeft: () => {
             return <ProfileImage />
           },
           tabBarIcon: ({ focused, size }) => {
-            let iconName;
+            let iconName
 
-            if (route.name === 'Notifications') {
-              iconName = focused
-                ? 'notifications'
-                : 'notifications-outline';
+            if (route.name === 'Wealth') {
+              iconName = focused ? 'cash' : 'cash-outline'
 
-                return <Ionicons name={iconName} size={size} />;
+              return <Ionicons name={iconName} size={size} />
             }
           },
         })}
       />
       <Tab.Screen
         name="Apps"
-        component={NotificationsScreen}
+        component={AppsScreen}
         options={({ route }) => ({
           headerLeft: () => {
             return <ProfileImage />
           },
           tabBarIcon: ({ focused, size }) => {
-            let iconName;
+            let iconName
 
             if (route.name === 'Apps') {
-              iconName = focused
-                ? 'apps'
-                : 'apps-outline';
+              iconName = focused ? 'apps' : 'apps-outline'
 
-                return <Ionicons name={iconName} size={size} />;
+              return <Ionicons name={iconName} size={size} />
             }
           },
         })}
@@ -204,36 +215,52 @@ const Home = () => {
 }
 
 export function NativeNavigation() {
+  const { authData } = useAuth()
+
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="home"
-        component={Home}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="splash"
-        component={SplashScreen}
-        options={{
-          title: 'It',
-        }}
-      />
-      <Stack.Screen
-        name="sign-up"
-        component={SignUpScreen}
-        options={{
-          title: 'Sign up',
-        }}
-      />
-      <Stack.Screen
-        name="user-detail"
-        component={UserDetailScreen}
-        options={{
-          title: 'User',
-        }}
-      />
+      {authData ? (
+        <>
+          <Stack.Screen
+            name="home"
+            component={Home}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="user-detail"
+            component={UserDetailScreen}
+            options={{
+              title: 'User',
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="splash"
+            component={SplashScreen}
+            options={{
+              title: 'It',
+            }}
+          />
+          <Stack.Screen
+            name="login"
+            component={LoginScreen}
+            options={{
+              title: 'Log in',
+            }}
+          />
+          <Stack.Screen
+            name="sign-up"
+            component={SignUpScreen}
+            options={{
+              title: 'Sign up',
+            }}
+          />
+        </>
+      )}
     </Stack.Navigator>
   )
 }

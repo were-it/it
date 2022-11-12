@@ -3,6 +3,7 @@ import { A, H1, P, Text, TextLink } from 'app/design/typography'
 import { Row } from 'app/design/layout'
 import { View } from 'app/design/view'
 import { TextInput } from 'app/components/TextInput'
+import { useAuth } from 'app/contexts/AuthContext'
 
 import { MotiLink } from 'solito/moti'
 import { Alert, Pressable } from 'react-native'
@@ -22,11 +23,12 @@ type FormValues = {
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/
 
 export function SignUpScreen() {
+  const { signUp } = useAuth()
+
   const { ...methods } = useForm({ mode: 'onChange' })
 
   const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
-    const response = register({ email, password })
-    console.log(response)
+    signUp(email, password)
   }
 
   const [formError, setError] = useState<Boolean>(false)
@@ -36,7 +38,7 @@ export function SignUpScreen() {
   }
 
   return (
-    <View className="mx-auto w-full flex-1 items-center justify-center px-6 py-8">
+    <View className="mx-auto w-full flex-1 items-center justify-center px-5 py-8">
       <H1>Sign up for It</H1>
       <View className="w-full sm:max-w-md">
         {formError ? (
@@ -52,6 +54,7 @@ export function SignUpScreen() {
                 name="email"
                 placeholder="Email"
                 keyboardType="email-address"
+                textContentType="emailAddress"
                 rules={{
                   required: 'Email is required',
                   pattern: EMAIL_REGEX,
@@ -62,6 +65,7 @@ export function SignUpScreen() {
                 name="password"
                 secureTextEntry
                 placeholder="Password"
+                textContentType="newPassword"
                 rules={{ required: 'Password is required' }}
                 setFormError={setError}
               />

@@ -3,9 +3,9 @@ import { A, H1, P, Text, TextLink } from 'app/design/typography'
 import { Row } from 'app/design/layout'
 import { View } from 'app/design/view'
 import { TextInput } from 'app/components/TextInput'
+import { useAuth } from 'app/contexts/AuthContext'
 
 import { MotiLink } from 'solito/moti'
-import { useRouter } from 'solito/router'
 import { Alert, Pressable } from 'react-native'
 import {
   useForm,
@@ -23,14 +23,12 @@ type FormValues = {
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/
 
 export function LoginScreen() {
+  const { signIn } = useAuth()
+
   const { ...methods } = useForm({ mode: 'onChange' })
 
-  const { push } = useRouter()
-
   const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
-    login({ email, password }).then(() => {
-      push('/home')
-    })
+    signIn(email, password)
   }
 
   const [formError, setError] = useState<Boolean>(false)
@@ -40,7 +38,7 @@ export function LoginScreen() {
   }
 
   return (
-    <View className="mx-auto w-full flex-1 items-center justify-center px-6 py-8">
+    <View className="mx-auto w-full flex-1 items-center justify-center px-5 py-8">
       <H1>Log in to It</H1>
       <View className="w-full sm:max-w-md">
         {formError ? (
@@ -61,6 +59,7 @@ export function LoginScreen() {
                   pattern: EMAIL_REGEX,
                 }}
                 setFormError={setError}
+                returnKeyType="next"
               />
               <TextInput
                 name="password"
@@ -68,6 +67,7 @@ export function LoginScreen() {
                 placeholder="Password"
                 rules={{ required: 'Password is required' }}
                 setFormError={setError}
+                returnKeyType="go"
               />
             </FormProvider>
           </>
