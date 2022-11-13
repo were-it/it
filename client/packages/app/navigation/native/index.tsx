@@ -9,6 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 const Tab = createBottomTabNavigator()
 
 import { HomeScreen } from '../../features/home/screen'
+import { ProfileScreen } from '../../features/profile/screen'
 import { SplashScreen } from '../../features/splash/screen'
 import { SignUpScreen } from '../../features/sign-up/screen'
 import { LoginScreen } from '../../features/login/screen'
@@ -21,10 +22,14 @@ import { NotificationsScreen } from '../../features/notifications/screen'
 import { AppsScreen } from '../../features/apps/screen'
 import { LearningScreen } from '../../features/learning/screen'
 import { useContext, useState } from 'react'
+import { useRouter } from 'solito/router'
 
 const Stack = createNativeStackNavigator<{
   home: undefined
   login: undefined
+  profile: {
+    username: string
+  }
   splash: undefined
   'sign-up': undefined
   'user-detail': {
@@ -33,9 +38,10 @@ const Stack = createNativeStackNavigator<{
 }>()
 
 const ProfileImage = () => {
+  const { push } = useRouter()
   return (
     <TouchableOpacity
-    // onPress={() => navigation.goBack()}
+    onPress={() => push('/joshsmith')}
     >
       <Image
         style={{ width: 30, height: 30, borderRadius: 15, marginLeft: 16 }}
@@ -49,9 +55,36 @@ const ProfileImage = () => {
   )
 }
 
-const Home = () => {
-  const {signOut} = useAuth()
+const HeaderRight = () => {
+  const { signOut } = useAuth()
 
+  return (
+    <View className="mr-4 flex-row space-x-2">
+      <Ionicons
+        name="search-outline"
+        color={'#000000'}
+        backgroundColor="transparent"
+        size={28}
+      />
+      <Ionicons
+        name="chatbubble-outline"
+        color={'#000000'}
+        backgroundColor="transparent"
+        size={28}
+      />
+      <TouchableOpacity onPress={() => signOut()}>
+        <Ionicons
+          name="log-out-outline"
+          color={'#000000'}
+          backgroundColor="transparent"
+          size={28}
+        />
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+const Home = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -66,30 +99,7 @@ const Home = () => {
             return <ProfileImage />
           },
           headerRight: () => {
-            return (
-              <View className="mr-4 flex-row space-x-2">
-                <Ionicons
-                  name="search-outline"
-                  color={'#000000'}
-                  backgroundColor="transparent"
-                  size={28}
-                />
-                <Ionicons
-                  name="chatbubble-outline"
-                  color={'#000000'}
-                  backgroundColor="transparent"
-                  size={28}
-                />
-                <TouchableOpacity onPress={() => signOut()}>
-                  <Ionicons
-                    name="log-out-outline"
-                    color={'#000000'}
-                    backgroundColor="transparent"
-                    size={28}
-                  />
-                </TouchableOpacity>
-              </View>
-            )
+            return <HeaderRight />
           },
           tabBarIcon: ({ focused, size }) => {
             let iconName
@@ -231,6 +241,13 @@ export function NativeNavigation() {
           <Stack.Screen
             name="user-detail"
             component={UserDetailScreen}
+            options={{
+              title: 'User',
+            }}
+          />
+          <Stack.Screen
+            name="profile"
+            component={ProfileScreen}
             options={{
               title: 'User',
             }}

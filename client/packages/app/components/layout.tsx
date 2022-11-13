@@ -19,10 +19,10 @@ export default function Layout({ children }: LayoutProps) {
       {authData ? (
         <View className="grid h-full grid-cols-12 gap-4">
           <View className="col-span-3 py-4 px-6">
+            <View className="space-y-4">
             <Link href="/home">
               <H1 className="text-5xl">It</H1>
             </Link>
-            <View className="space-y-4">
             <Link href="/home">
               <View className="flex-row items-center space-x-5">
                 <Ionicons name="home-outline" size={30} /><Text className="text-lg md:block hidden">Home</Text>
@@ -64,10 +64,13 @@ export default function Layout({ children }: LayoutProps) {
               </View>
             </Link>
             </View>
+            <View className="mt-6 pt-6 border-t border-gray-100">
+                          <Pressable onPress={signOut}><View className="flex-row items-center space-x-2"><Ionicons name="log-out-outline" size={25} /><Text>Log Out</Text></View></Pressable>
+
+            </View>
           </View>
           <View className="col-span-6 border border-b-0 border-t-0 border-gray-100">{children}</View>
-          <View className="col-span-3">
-            <Pressable onPress={signOut}>Log Out</Pressable>
+          <View className="col-span-3 py-4 px-6">
           </View>
         </View>
       ) : (
