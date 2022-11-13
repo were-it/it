@@ -51,7 +51,8 @@ defmodule It.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:pow, "~> 1.0"},
       {:argon2_elixir, "~> 3.0"},
-      {:cors_plug, "~> 3.0"}
+      {:cors_plug, "~> 3.0"},
+      {:the_big_username_blacklist, "~> 0.1.2"}
     ]
   end
 

@@ -6,9 +6,10 @@ defmodule ItWeb.RegistrationControllerTest do
   describe "create/2" do
     @valid_params %{
       "user" => %{
-        "email" => "test@example.com",
+        "email" => "josh@wereit.app",
         "password" => @password,
-        "password_confirmation" => @password
+        "password_confirmation" => @password,
+        "username" => "joshsmith"
       }
     }
     @invalid_params %{

@@ -5,21 +5,22 @@ import { View } from 'app/design/view'
 import { TextInput } from 'app/components/TextInput'
 import { useAuth } from 'app/contexts/AuthContext'
 
+import { useRouter } from 'solito/router'
 import { MotiLink } from 'solito/moti'
-import { Alert, Pressable } from 'react-native'
+import { Alert, Platform, Pressable } from 'react-native'
 import {
   useForm,
   FormProvider,
   SubmitHandler,
   SubmitErrorHandler,
 } from 'react-hook-form'
-import { register } from 'app/auth/Auth'
 
 type FormValues = {
   email: string
   password: string
 }
 
+const USERNAME_REGEX = /^[a-z0-9_]{3,25}$/
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/
 
 export function SignUpScreen() {
@@ -51,10 +52,23 @@ export function SignUpScreen() {
           <>
             <FormProvider {...methods}>
               <TextInput
+                name="username"
+                placeholder="Username"
+                keyboardType="default"
+                textContentType="username"
+                autoComplete="username-new"
+                rules={{
+                  required: 'Username is required',
+                  pattern: USERNAME_REGEX,
+                }}
+                setFormError={setError}
+              />
+              <TextInput
                 name="email"
                 placeholder="Email"
                 keyboardType="email-address"
                 textContentType="emailAddress"
+                autoComplete="email"
                 rules={{
                   required: 'Email is required',
                   pattern: EMAIL_REGEX,

@@ -18,11 +18,11 @@ const signIn = (email: string, password: string): Promise<AuthData> => {
   }
 }
 
-const signUp = (email: string, password: string): Promise<AuthData> => {
+const signUp = (email: string, password: string, username: string): Promise<AuthData> => {
   try {
     return ApiManager('/registration', {
       method: 'POST',
-      data: { user: { email, password, password_confirmation: password } },
+      data: { user: { email, password, password_confirmation: password, username } },
     })
   } catch (e) {
     return e
