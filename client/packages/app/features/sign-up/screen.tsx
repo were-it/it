@@ -18,6 +18,7 @@ import {
 type FormValues = {
   email: string
   password: string
+  username: string
 }
 
 const USERNAME_REGEX = /^[a-z0-9_]{3,25}$/
@@ -28,8 +29,8 @@ export function SignUpScreen() {
 
   const { ...methods } = useForm({ mode: 'onChange' })
 
-  const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
-    signUp(email, password)
+  const onSubmit: SubmitHandler<FormValues> = ({ email, password, username }) => {
+    signUp(email, password, username)
   }
 
   const [formError, setError] = useState<Boolean>(false)

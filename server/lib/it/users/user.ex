@@ -14,6 +14,14 @@ defmodule It.Users.User do
     timestamps()
   end
 
+  def data() do
+    Dataloader.Ecto.new(It.Repo, query: &query/2)
+  end
+
+  def query(queryable, _params) do
+    queryable
+  end
+
   def changeset(user_or_changeset, attrs) do
     user_or_changeset
     |> pow_changeset(attrs)

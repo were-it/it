@@ -3,7 +3,7 @@ import { A, H1, P, Text, TextLink } from 'app/design/typography'
 import { Row } from 'app/design/layout'
 import { View } from 'app/design/view'
 import { TextInput } from 'app/components/TextInput'
-import { useAuth } from 'app/contexts/AuthContext'
+// import { useAuth } from 'app/contexts/AuthContext'
 
 import { MotiLink } from 'solito/moti'
 import { Alert, Pressable } from 'react-native'
@@ -13,7 +13,8 @@ import {
   SubmitHandler,
   SubmitErrorHandler,
 } from 'react-hook-form'
-import { login } from 'app/auth/Auth'
+// import { login } from 'app/auth/Auth'
+import { useAuth } from 'app/hooks/auth/use-auth'
 
 type FormValues = {
   email: string
@@ -23,12 +24,12 @@ type FormValues = {
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/
 
 export function LoginScreen() {
-  const { signIn } = useAuth()
+  const { login } = useAuth()
 
   const { ...methods } = useForm({ mode: 'onChange' })
 
   const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
-    signIn(email, password)
+    login(email, password)
   }
 
   const [formError, setError] = useState<Boolean>(false)

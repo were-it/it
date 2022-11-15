@@ -1,22 +1,25 @@
 import React from 'react'
 import { View } from 'app/design/view'
-import { useAuth } from 'app/contexts/AuthContext'
 import { H1, Text } from 'app/design/typography'
 import { Pressable } from 'react-native'
 import { Link } from 'solito/link'
 import { Ionicons } from '@expo/vector-icons'
 import { styled } from 'nativewind'
+import { useGetMeQuery } from 'app/generated'
+import { useAuth } from 'app/hooks/auth/use-auth'
 
 interface LayoutProps {
   children: any
 }
 
 export default function Layout({ children }: LayoutProps) {
-  const { authData, signOut } = useAuth()
+  const { accessToken, authenticationStatus, logout } = useAuth()
+  const { data } = useGetMeQuery()
 
   return (
     <>
-      {authData ? (
+    {accessToken}
+      {authenticationStatus === 'AUTHENTICATED' ? (
         <View className="grid h-full grid-cols-12 gap-4">
           <View className="col-span-3 py-4 px-6">
             <View className="space-y-4">
@@ -65,8 +68,10 @@ export default function Layout({ children }: LayoutProps) {
             </Link>
             </View>
             <View className="mt-6 pt-6 border-t border-gray-100">
-                          <Pressable onPress={signOut}><View className="flex-row items-center space-x-2"><Ionicons name="log-out-outline" size={25} /><Text>Log Out</Text></View></Pressable>
-
+              {data?.getMe && (
+                <View>{data.getMe.email}</View>
+              )}
+              <Pressable onPress={logout}><View className="flex-row items-center space-x-2"><Ionicons name="log-out-outline" size={25} /><Text>Log Out</Text></View></Pressable>
             </View>
           </View>
           <View className="col-span-6 border border-b-0 border-t-0 border-gray-100">{children}</View>

@@ -52,7 +52,9 @@ defmodule It.MixProject do
       {:pow, "~> 1.0"},
       {:argon2_elixir, "~> 3.0"},
       {:cors_plug, "~> 3.0"},
-      {:the_big_username_blacklist, "~> 0.1.2"}
+      {:the_big_username_blacklist, "~> 0.1.2"},
+      {:absinthe_phoenix, "~> 2.0.2"},
+      {:dataloader, "~> 1.0.10"}
     ]
   end
 
@@ -68,7 +70,10 @@ defmodule It.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": ["esbuild default --minify", "phx.digest"],
+      "gen.sdl": [
+        "absinthe.schema.sdl --schema ItWeb.Schema.Schema ../client/schema.graphql"
+      ]
     ]
   end
 end

@@ -6,21 +6,29 @@ defmodule ItWeb.Router do
     plug(ItWeb.APIAuthPlug, otp_app: :it)
   end
 
-  pipeline :api_protected do
-    plug(Pow.Plug.RequireAuthenticated, error_handler: ItWeb.APIAuthErrorHandler)
-  end
+  # pipeline :api_protected do
+  #   plug(Pow.Plug.RequireAuthenticated, error_handler: ItWeb.APIAuthErrorHandler)
+  # end
 
-  scope "/api", ItWeb do
+  scope "/" do
     pipe_through(:api)
 
-    resources("/registration", RegistrationController, singleton: true, only: [:create])
-    resources("/session", SessionController, singleton: true, only: [:create, :delete])
-    post("/session/renew", SessionController, :renew)
+    resources("/registration", ItWeb.RegistrationController, singleton: true, only: [:create])
+    resources("/session", ItWeb.SessionController, singleton: true, only: [:create, :delete])
+    post("/session/renew", ItWeb.SessionController, :renew)
   end
 
-  scope "/api", ItWeb do
-    pipe_through([:api, :api_protected])
+  scope "/" do
+    pipe_through(:api)
+    # pipe_through([:api, :api_protected])
 
-    # Your protected API endpoints here
+    forward("/api", Absinthe.Plug, schema: It.Schema.Schema)
+
+    if Mix.env() == :dev do
+      forward("/graphiql", Absinthe.Plug.GraphiQL,
+        schema: It.Schema.Schema,
+        interface: :playground
+      )
+    end
   end
 end

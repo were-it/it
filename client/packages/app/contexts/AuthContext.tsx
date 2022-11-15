@@ -1,14 +1,13 @@
 import React, { createContext, useState, useContext, useEffect } from 'react'
-import { Platform } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { AuthData, authService } from '../services/auth'
+import { AuthData, authService } from '../services/auth-service'
 
 type AuthContextData = {
   authData?: AuthData
   loading: boolean
   signIn(email: string, password: string): Promise<void>
-  signUp(email: string, password: string): Promise<void>
+  signUp(email: string, password: string, username: string): Promise<void>
   signOut(): void
 }
 
@@ -41,13 +40,19 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signIn = async (email: string, password: string) => {
     const _authData = await authService.signIn(email, password)
-    setAuthData(_authData)
+    setAuthData({ ..._authData, tokenRetrievedAt: Date.now()})
     AsyncStorage.setItem('@AuthData', JSON.stringify(_authData))
   }
 
-  const signUp = async (email: string, password: string) => {
-    const _authData = await authService.signUp(email, password)
-    setAuthData(_authData)
+  const signUp = async (email: string, password: string, username: string) => {
+    const _authData = await authService.signUp(email, password, username)
+    setAuthData({ ..._authData, tokenRetrievedAt: Date.now()})
+    AsyncStorage.setItem('@AuthData', JSON.stringify(_authData))
+  }
+
+  const renew = async (renewal_token: string) => {
+    const _authData = await authService.renew(renewal_token)
+    setAuthData({ ..._authData, tokenRetrievedAt: Date.now()})
     AsyncStorage.setItem('@AuthData', JSON.stringify(_authData))
   }
 
