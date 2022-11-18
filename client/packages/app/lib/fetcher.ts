@@ -1,14 +1,12 @@
 import { getAccessToken } from 'app/lib/access-token'
-// import { API_URL } from '@env'
+import Constants from 'expo-constants';
 
 let endpointUrl: string
 
-const API_URL = 'http://localhost:4000/api'
-
-if (typeof API_URL === 'undefined') {
-  throw new Error('API_URL is required!')
+if (typeof process.env.NEXT_PUBLIC_API_URL === 'undefined') {
+  throw new Error('NEXT_PUBLIC_API_URL is required!')
 } else {
-  endpointUrl = API_URL
+  endpointUrl = `${process.env.NEXT_PUBLIC_API_URL}/api`
 }
 
 /**

@@ -1,3 +1,17 @@
+const APP_ENV = process.env.APP_ENV || 'development'
+
+require('dotenv').config({
+  path: `../../.env.${APP_ENV}`,
+})
+
+const env = {}
+
+Object.keys(process.env).forEach((key) => {
+  if (key.startsWith('NEXT_PUBLIC_')) {
+    env[key] = process.env[key]
+  }
+})
+
 const { withExpo } = require('@expo/next-adapter')
 const withPlugins = require('next-compose-plugins')
 const withTM = require('next-transpile-modules')([
@@ -25,6 +39,9 @@ const nextConfig = {
 }
 
 module.exports = withPlugins(
-  [withTM, withFonts, withImages, withExpo],
-  nextConfig
+  [withTM, withFonts, withImages, [withExpo, { projectRoot: '../../' }]],
+  {
+    ...nextConfig,
+    env,
+  }
 )

@@ -1708,6 +1708,11 @@
   resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-46.0.2.tgz#191f225ebfcbe624868ddc40efae79593f948dd8"
   integrity sha512-PXkmOgNwRyBfgVT1HmFZhfh3Qm7WKKyV6mk3/5HJ/LzPh1t+Zs2JrWX8U2YncTLV1QzV7nV8tnkyvszzqnZEzQ==
 
+"@expo/config-types@^47.0.0":
+  version "47.0.0"
+  resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-47.0.0.tgz#99eeabe0bba7a776e0f252b78beb0c574692c38d"
+  integrity sha512-r0pWfuhkv7KIcXMUiNACJmJKKwlTBGMw9VZHNdppS8/0Nve8HZMTkNRFQzTHW1uH3pBj8jEXpyw/2vSWDHex9g==
+
 "@expo/config@7.0.1", "@expo/config@~7.0.0", "@expo/config@~7.0.1":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@expo/config/-/config-7.0.1.tgz#d8e2e5410bb0b8e305690bbc76e6bb76f6a6de31"
@@ -3808,6 +3813,11 @@ anymatch@^3.0.0, anymatch@^3.0.3, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+app-root-path@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/app-root-path/-/app-root-path-3.1.0.tgz#5971a2fc12ba170369a7a1ef018c71e6e47c2e86"
+  integrity sha512-biN3PwB2gUtjaYy/isrU3aNWI5w+fAfvHkSvCKeQGxhmYpwKFUxudR3Yya+KqVRHBmEDYh+/lTozYCFbmzX4nA==
+
 appdirsjs@^1.2.4:
   version "1.2.6"
   resolved "https://registry.yarnpkg.com/appdirsjs/-/appdirsjs-1.2.6.tgz#fccf9ee543315492867cacfcfd4a2b32257d30ac"
@@ -4102,6 +4112,13 @@ babel-plugin-dynamic-import-node@^2.3.3:
   dependencies:
     object.assign "^4.1.0"
 
+babel-plugin-inline-dotenv@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-inline-dotenv/-/babel-plugin-inline-dotenv-1.7.0.tgz#c4b9f9752678be4b49a6b5d3d2b47def741a4d5f"
+  integrity sha512-FUrXEwY9R9ZO8l0NFHqXFBzHjjMvdIJlELrzJoE6imDsj6Vh7g9svm7iHPHVYPbHmt6BPB2eCAJkwvG6kr5byg==
+  dependencies:
+    dotenv "^16.0.0"
+
 babel-plugin-module-resolver@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-module-resolver/-/babel-plugin-module-resolver-4.1.0.tgz#22a4f32f7441727ec1fbf4967b863e1e3e9f33e2"
@@ -4151,6 +4168,11 @@ babel-plugin-syntax-trailing-function-commas@^7.0.0-beta.0:
   version "7.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-trailing-function-commas/-/babel-plugin-syntax-trailing-function-commas-7.0.0-beta.0.tgz#aa213c1435e2bffeb6fca842287ef534ad05d5cf"
   integrity sha512-Xj9XuRuz3nTSbaTXWv3itLOcxyF4oPD8douBBmj7U9BBC6nEBYfyOJYQMf/8PJAFotC62UY5dFfIGEPr7WswzQ==
+
+babel-plugin-transform-inline-environment-variables@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-inline-environment-variables/-/babel-plugin-transform-inline-environment-variables-0.4.4.tgz#974245008b3cbbd646bd81707af147aea3acca43"
+  integrity sha512-bJILBtn5a11SmtR2j/3mBOjX4K3weC6cq+NNZ7hG22wCAqpc3qtj/iN7dSe9HDiS46lgp1nHsQgeYrea/RUe+g==
 
 babel-preset-expo@^8.4.1:
   version "8.5.1"
@@ -11578,6 +11600,14 @@ react-native-gradle-plugin@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.7.tgz#96602f909745239deab7b589443f14fce5da2056"
   integrity sha512-+4JpbIx42zGTONhBTIXSyfyHICHC29VTvhkkoUOJAh/XHPEixpuBduYgf6Y4y9wsN1ARlQhBBoptTvXvAFQf5g==
+
+react-native-localhost@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-localhost/-/react-native-localhost-1.0.0.tgz#f185c79a9fc1be2a0670cd12511d5a383059c22e"
+  integrity sha512-HwGYNMzR9zUAbjiQi4vtrXKlRlhyRJ3aNLtVrxHLSZwyU2KgAlAVD9k5LiaS616GDuUtTnFKu+9oHqz0WhR3Bg==
+  dependencies:
+    app-root-path "^3.0.0"
+    ip "^1.1.5"
 
 react-native-mmkv@^2.5.1:
   version "2.5.1"

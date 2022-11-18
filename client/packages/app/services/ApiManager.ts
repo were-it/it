@@ -1,10 +1,7 @@
 import axios from 'axios'
-import Constants from 'expo-constants'
-
-const apiUrl = Constants.expoConfig?.extra?.apiUrl || 'http://localhost:4000'
 
 const ApiManager = axios.create({
-  baseURL: apiUrl,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     Accept: 'application/json',
   },
