@@ -38,7 +38,8 @@ const ControlledInput = (props: TextInputProps) => {
           {...inputProps}
         />
         <View className="h-4">
-          {hasError && (<Text className="text-red-600 text-xs px-2">{formState.errors[name].message}</Text>)}
+          {/* @ts-ignore:next-line */}
+          {hasError && <Text className="text-red-600 text-xs px-2">{formState.errors[name].message}</Text>}
         </View>
       </View>
     </View>
