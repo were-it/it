@@ -24,7 +24,7 @@ const EMAIL_REGEX = /^\S+@\S+\.\S+$/
 export function LoginScreen() {
   const { login } = useAuth()
 
-  const { ...methods } = useForm({ mode: 'onChange' })
+  const { ...methods } = useForm<FormValues>({ mode: 'onChange' })
 
   const onSubmit: SubmitHandler<FormValues> = ({ email, password }) => {
     login(email, password)
