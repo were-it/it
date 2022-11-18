@@ -77,6 +77,29 @@ export function AuthProvider({ children }: AuthProviderProps) {
     [router]
   )
 
+  const signup = useCallback(
+    async function signup(email: string, password: string, username: string): Promise<boolean> {
+      const response = await authService.signUp(email, password, username)
+
+      const accessToken = response?.data.data.access_token
+      const refreshToken = response?.data.data.renewal_token
+      const validResponse = accessToken && refreshToken
+
+      if (validResponse) {
+        setTokens(accessToken, refreshToken)
+        loginStorage.setLogin(Date.now().toString())
+        setAuthenticationStatus('AUTHENTICATED')
+        router.push('/home')
+
+        return true
+      }
+
+      setAuthenticationStatus('UNAUTHENTICATED')
+      throw 'Signup failed'
+    },
+    [router, setTokens, setAuthenticationStatus]
+  )
+
   const doRefreshToken = useCallback(async () => {
     setAuthenticationStatus('REFRESHING')
     try {
@@ -102,6 +125,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setAuthenticationStatus,
       login,
       logout,
+      signup
     }),
     [authenticationStatus, accessToken, setAuthenticationStatus, login, logout]
   )

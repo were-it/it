@@ -3,7 +3,6 @@ import { A, H1, P, Text, TextLink } from 'app/design/typography'
 import { Row } from 'app/design/layout'
 import { View } from 'app/design/view'
 import { TextInput } from 'app/components/TextInput'
-// import { useAuth } from 'app/contexts/AuthContext'
 
 import { MotiLink } from 'solito/moti'
 import { Alert, Pressable } from 'react-native'
@@ -13,7 +12,6 @@ import {
   SubmitHandler,
   SubmitErrorHandler,
 } from 'react-hook-form'
-// import { login } from 'app/auth/Auth'
 import { useAuth } from 'app/hooks/auth/use-auth'
 
 type FormValues = {

@@ -3,7 +3,7 @@ import { A, H1, P, Text, TextLink } from 'app/design/typography'
 import { Row } from 'app/design/layout'
 import { View } from 'app/design/view'
 import { TextInput } from 'app/components/TextInput'
-import { useAuth } from 'app/contexts/AuthContext'
+import { useAuth } from 'app/hooks/auth/use-auth'
 
 import { useRouter } from 'solito/router'
 import { MotiLink } from 'solito/moti'
@@ -25,12 +25,12 @@ const USERNAME_REGEX = /^[a-z0-9_]{3,25}$/
 const EMAIL_REGEX = /^\S+@\S+\.\S+$/
 
 export function SignUpScreen() {
-  const { signUp } = useAuth()
+  const { signup } = useAuth()
 
   const { ...methods } = useForm({ mode: 'onChange' })
 
   const onSubmit: SubmitHandler<FormValues> = ({ email, password, username }) => {
-    signUp(email, password, username)
+    signup(email, password, username)
   }
 
   const [formError, setError] = useState<Boolean>(false)

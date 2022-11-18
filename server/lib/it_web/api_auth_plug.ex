@@ -115,7 +115,7 @@ defmodule ItWeb.APIAuthPlug do
     Plug.sign_token(conn, signing_salt(), token, config)
   end
 
-  defp signing_salt(), do: Atom.to_string(__MODULE__)
+  defp signing_salt(), do: System.get_env("USER_AUTH_TOKEN_SALT") || "local_salt"
 
   defp fetch_access_token(conn) do
     case Conn.get_req_header(conn, "authorization") do
