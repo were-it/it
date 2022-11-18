@@ -50,7 +50,7 @@ defmodule ItWeb.SessionControllerTest do
     test "with valid authorization header", %{conn: conn, renewal_token: token} do
       conn =
         conn
-        |> Plug.Conn.put_req_header("authorization", token)
+        |> Plug.Conn.put_req_header("authorization", "Bearer " <> token)
         |> post(Routes.session_path(conn, :renew))
 
       assert json = json_response(conn, 200)
