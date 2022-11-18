@@ -29,6 +29,8 @@ config :it, ItWeb.Endpoint,
     esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
   ]
 
+config :mnesia, dir: to_charlist(File.cwd!()) ++ '/priv/mnesia'
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

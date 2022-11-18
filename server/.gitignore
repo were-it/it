@@ -36,3 +36,5 @@ npm-debug.log
 /config/**.secret.exs
 
 /rel/
+
+/priv/mnesia

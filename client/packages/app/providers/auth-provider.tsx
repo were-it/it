@@ -127,7 +127,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       logout,
       signup
     }),
-    [authenticationStatus, accessToken, setAuthenticationStatus, login, logout]
+    [authenticationStatus, accessToken, setAuthenticationStatus, login, logout, signup]
   )
   //#endregion
 
@@ -158,8 +158,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return () => {
       subscription.remove()
     }
-  }, [accessToken, doRefreshToken])
-
+  }, [doRefreshToken])
   //#endregion
 
   return (
