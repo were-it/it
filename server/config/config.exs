@@ -41,6 +41,8 @@ config :cors_plug,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   send_preflight_response?: true
 
+config :mnesia, :dir, '/mnesia'
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
