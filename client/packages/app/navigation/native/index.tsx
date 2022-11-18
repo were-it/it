@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { Button, Image, TouchableOpacity } from 'react-native'
 import { View } from 'app/design/view'
-import { useAuth } from 'app/contexts/AuthContext'
+import { useAuth } from 'app/hooks/auth/use-auth'
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -56,7 +56,7 @@ const ProfileImage = () => {
 }
 
 const HeaderRight = () => {
-  const { signOut } = useAuth()
+  const { logout } = useAuth()
 
   return (
     <View className="mr-4 flex-row space-x-2">
@@ -72,7 +72,7 @@ const HeaderRight = () => {
         backgroundColor="transparent"
         size={28}
       />
-      <TouchableOpacity onPress={() => signOut()}>
+      <TouchableOpacity onPress={() => logout()}>
         <Ionicons
           name="log-out-outline"
           color={'#000000'}
@@ -225,11 +225,11 @@ const Home = () => {
 }
 
 export function NativeNavigation() {
-  const { authData } = useAuth()
+  const { authenticationStatus } = useAuth()
 
   return (
     <Stack.Navigator>
-      {authData ? (
+      {authenticationStatus === 'AUTHENTICATED' ? (
         <>
           <Stack.Screen
             name="home"

@@ -6,10 +6,6 @@ defmodule ItWeb.Router do
     plug(ItWeb.APIAuthPlug, otp_app: :it)
   end
 
-  # pipeline :api_protected do
-  #   plug(Pow.Plug.RequireAuthenticated, error_handler: ItWeb.APIAuthErrorHandler)
-  # end
-
   scope "/" do
     pipe_through(:api)
 
@@ -20,7 +16,6 @@ defmodule ItWeb.Router do
 
   scope "/" do
     pipe_through(:api)
-    # pipe_through([:api, :api_protected])
 
     forward("/api", Absinthe.Plug, schema: It.Schema.Schema)
 

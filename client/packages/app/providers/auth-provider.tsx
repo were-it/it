@@ -134,7 +134,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return () => {
       subscription.remove()
     }
-  }, [doRefreshToken])
+  }, [accessToken, doRefreshToken])
 
   //#endregion
 
