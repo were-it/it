@@ -15,7 +15,7 @@ defmodule ItWeb.APIAuthPlug do
     with {:ok, signed_token} <- fetch_access_token(conn),
          {:ok, token} <- verify_token(conn, signed_token, config),
          {user, _metadata} <- CredentialsCache.get(store_config(config), token) do
-      {conn, user}
+      {Absinthe.Plug.put_options(conn, context: %{current_user: user}), user}
     else
       _any -> {conn, nil}
     end
@@ -115,11 +115,11 @@ defmodule ItWeb.APIAuthPlug do
     Plug.sign_token(conn, signing_salt(), token, config)
   end
 
-  defp signing_salt(), do: Atom.to_string(__MODULE__)
+  defp signing_salt(), do: System.get_env("USER_AUTH_TOKEN_SALT") || "local_salt"
 
   defp fetch_access_token(conn) do
     case Conn.get_req_header(conn, "authorization") do
-      [token | _rest] -> {:ok, token}
+      ["Bearer " <> token] -> {:ok, token}
       _any -> :error
     end
   end

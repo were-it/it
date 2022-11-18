@@ -9,9 +9,10 @@ defmodule ItWeb.SessionControllerTest do
     user =
       %User{}
       |> User.changeset(%{
-        email: "test@example.com",
+        email: "josh@wereit.app",
         password: @password,
-        password_confirmation: @password
+        password_confirmation: @password,
+        username: "joshsmith"
       })
       |> Repo.insert!()
 
@@ -19,8 +20,8 @@ defmodule ItWeb.SessionControllerTest do
   end
 
   describe "create/2" do
-    @valid_params %{"user" => %{"email" => "test@example.com", "password" => @password}}
-    @invalid_params %{"user" => %{"email" => "test@example.com", "password" => "invalid"}}
+    @valid_params %{"user" => %{"email" => "josh@wereit.app", "password" => @password}}
+    @invalid_params %{"user" => %{"email" => "josh@wereit.app", "password" => "invalid"}}
 
     test "with valid params", %{conn: conn} do
       conn = post(conn, Routes.session_path(conn, :create, @valid_params))
@@ -49,7 +50,7 @@ defmodule ItWeb.SessionControllerTest do
     test "with valid authorization header", %{conn: conn, renewal_token: token} do
       conn =
         conn
-        |> Plug.Conn.put_req_header("authorization", token)
+        |> Plug.Conn.put_req_header("authorization", "Bearer " <> token)
         |> post(Routes.session_path(conn, :renew))
 
       assert json = json_response(conn, 200)

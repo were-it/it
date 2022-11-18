@@ -17,6 +17,30 @@ config :it, ItWeb.Endpoint,
   pubsub_server: It.PubSub,
   live_view: [signing_salt: "Kuda6lDw"]
 
+config :cors_plug,
+  origin: "*",
+  credentials: true,
+  max_age: 1_728_000,
+  headers: [
+    "Authorization",
+    "Content-Type",
+    "Accept",
+    "Origin",
+    "User-Agent",
+    "DNT",
+    "Cache-Control",
+    "X-Mx-ReqToken",
+    "Keep-Alive",
+    "X-Requested-With",
+    "If-Modified-Since",
+    "X-CSRF-Token",
+    "sentry-trace",
+    "baggage"
+  ],
+  expose: [],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  send_preflight_response?: true
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

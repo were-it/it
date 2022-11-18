@@ -66,5 +66,6 @@ defmodule ItWeb.APIAuthPlugTest do
   defp run({conn, value}), do: {run(conn), value}
   defp run(conn), do: Conn.send_resp(conn, 200, "")
 
-  defp with_auth_header(conn, token), do: Plug.Conn.put_req_header(conn, "authorization", token)
+  defp with_auth_header(conn, token),
+    do: Plug.Conn.put_req_header(conn, "authorization", "Bearer " <> token)
 end
