@@ -28,11 +28,26 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
+  database_ca_cert_filepath =
+    System.get_env("DATABASE_CA_CERT_FILEPATH") || "/etc/ssl/certs/ca-certificates.crt"
+
   maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
   config :it, It.Repo,
     # ssl: true,
     url: database_url,
+    # Our production Neon database requires SSL to be enabled to connect. This enables verifying the Postgres server has a valid certificate.
+    ssl: true,
+    ssl_opts: [
+      verify: :verify_peer,
+      cacertfile: database_ca_cert_filepath,
+      # see https://pspdfkit.com/blog/2022/using-ssl-postgresql-connections-elixir/
+      server_name_indication: to_charlist(database_host),
+      customize_hostname_check: [
+        # Our hosting provider uses a wildcard certificate. By default, Erlang does not support wildcard certificates. This function supports validating wildcard hosts
+        match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+      ]
+    ],
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
 
