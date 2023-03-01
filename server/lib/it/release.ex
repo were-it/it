@@ -6,6 +6,8 @@ defmodule It.Release do
   @app :it
 
   def migrate do
+    ensure_started()
+
     load_app()
 
     for repo <- repos() do
@@ -20,6 +22,10 @@ defmodule It.Release do
 
   defp repos do
     Application.fetch_env!(@app, :ecto_repos)
+  end
+
+  defp ensure_started do
+    Application.ensure_all_started(:ssl)
   end
 
   defp load_app do
