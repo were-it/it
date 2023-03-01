@@ -15,9 +15,9 @@ defmodule It.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: It.PubSub},
       # Start the Endpoint (http/https)
-      ItWeb.Endpoint,
+      ItWeb.Endpoint
       # Start the Mnesia cache
-      Pow.Store.Backend.MnesiaCache
+      # Pow.Store.Backend.MnesiaCache
       # Start a worker by calling: It.Worker.start_link(arg)
       # {It.Worker, arg}
     ]
