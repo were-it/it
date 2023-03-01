@@ -28,6 +28,10 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
+  %URI{host: database_host} = URI.parse(database_url)
+
+  # Location of root certificates to verify database SSL connection.
+  # For example: /opt/homebrew/etc/openssl@3/cert.pem
   database_ca_cert_filepath =
     System.get_env("DATABASE_CA_CERT_FILEPATH") || "/etc/ssl/certs/ca-certificates.crt"
 
