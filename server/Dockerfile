@@ -91,4 +91,12 @@ RUN chmod +x init.sh
 
 USER nobody
 
+RUN mix local.hex --force && \
+  mix local.rebar --force
+
+RUN mix deps.get
+RUN mix deps.compile
+
+RUN mix compile
+
 CMD ["/app/init.sh"]
