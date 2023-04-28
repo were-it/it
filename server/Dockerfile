@@ -62,42 +62,31 @@ RUN mix compile
 COPY config/runtime.exs config/
 
 COPY rel rel
-# RUN mix release
-RUN mix compile
+RUN mix release
 
-# # start a new build stage so that the final image will only contain
-# # the compiled release and other runtime necessities
-# FROM ${RUNNER_IMAGE}
+# start a new build stage so that the final image will only contain
+# the compiled release and other runtime necessities
+FROM ${RUNNER_IMAGE}
 
-# RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates \
-#   && apt-get clean && rm -f /var/lib/apt/lists/*_*
+RUN apt-get update -y && apt-get install -y libstdc++6 openssl libncurses5 locales ca-certificates \
+  && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
-# # Set the locale
-# RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+# Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
 
-# ENV LANG en_US.UTF-8
-# ENV LANGUAGE en_US:en
-# ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
-# WORKDIR "/app"
-# RUN chown nobody /app
+WORKDIR "/app"
+RUN chown nobody /app
 
-# # set runner ENV
-# ENV MIX_ENV="prod"
+# set runner ENV
+ENV MIX_ENV="prod"
 
-# # Only copy the final release from the build stage
-# COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/it ./
-# COPY init.sh ./
-# RUN chmod +x init.sh
+# Only copy the final release from the build stage
+COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/it ./
 
-# USER nobody
+USER nobody
 
-# RUN mix local.hex --force && \
-#   mix local.rebar --force
-
-# RUN mix deps.get
-# RUN mix deps.compile
-
-# RUN mix compile
-
-CMD ["/app/init.sh"]
+CMD ["/app/bin/server"]
