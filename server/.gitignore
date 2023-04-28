@@ -35,6 +35,4 @@ npm-debug.log
 # Ignore secret files
 /config/**.secret.exs
 
-/rel/
-
 /priv/mnesia
