@@ -89,8 +89,4 @@ COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/it ./
 
 USER nobody
 
-RUN ip=$(grep fly-local-6pn /etc/hosts | cut -f 1)
-RUN export RELEASE_DISTRIBUTION=name
-RUN export RELEASE_NODE=$FLY_APP_NAME@$ip
-
 CMD ["/app/bin/server"]
